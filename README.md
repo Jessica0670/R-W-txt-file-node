@@ -1,8 +1,8 @@
 ## Thank you for your interest in I 💛 Jane.
 
-##Instructions:
+## Instructions:
 
-###To Run:
+### To Run:
 
 `node server`
 
