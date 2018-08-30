@@ -2,11 +2,7 @@ let fs = require('fs');
 
 let arrayOfElem = [];
 let scores = {};
-////////////////////////////////////
-// If two or more teams have the same number of points,
-// they should have the same rank and be printed in alphabetical order (as in the
-// tie for 3rd place in the sample data).
-////////////////////////////////////
+let string;
 
 //read txt file
 let readLines = (input, func) => {
@@ -21,7 +17,8 @@ let readLines = (input, func) => {
       index = item.indexOf('\n');
     }
     tallyScore(arrayOfElem)
-    writeToFile(scores)
+    sortScores(scores)
+    writeToFile(string)
   });
   input.on('end', () => {
     if (item.length > 0) {
@@ -68,56 +65,27 @@ let tallyScore = (array) => {
             if(x[a] < x[b]){
                 scores[b] = scores[b] + 3
             }
-
-            //     !scores[a] ?
-            //         scores[a] = 0
-            //     : !scores[b] ?
-            //         scores[b] = 0
-            //     : x[a] === x[b] ?
-            //         scores[a]++ 
-            //         &&
-            //         scores[b]++
-            //     : x[a] > x[b] ?
-            //         scores[a] = scores[a] + 3
-            //     : 
-            //         scores[b] = scores[b] + 3
-
-            // // }
-            // // switch(scores, x) {
-            // //     case (!scores[a]):
-            // //         scores[a] = 0
-            // //         break;
-            // //     case (!scores[b]):
-            // //         scores[b] = 0
-            // //         break;
-            // //     case (x[a] === x[b]):
-            // //         scores[a]++
-            // //         scores[b]++
-            // //         break;
-            // //     case (x[a] > x[b]):
-            // //         scores[a] = scores[a] + 3
-            // //         break;
-            // //     case (x[a] < x[b]):
-            // //         scores[b] = scores[b] + 3
-            // //         break;
-            // //     default:
-            // //         scores
-            // //         break;
-            // // }
         });
-
     })
 }
-
-//write score to file as string
-let writeToFile = (scores) => {
-  let arrayOfStrings = [];
-  let count = 1;
-  for(var prop in scores) {
-    arrayOfStrings.push(count + '. ' + prop + ', ' + scores[prop] + '\n')
-    count++
+let sortScores = (scores) => {
+  var sortedScores = [];
+  for (var prop in scores) {
+      sortedScores.push([prop, scores[prop]]);
   }
-  let string = arrayOfStrings.join(" ")
+
+  sortedScores.sort(function(a, b) {
+      return b[1] - a[1];
+  });
+  let i = 0;
+  let arrayOfScores = sortedScores.map((item) => {
+    i++
+    return (i + '. ' + item[0] + ', ' + item[1] + '\n').toString();
+  })
+  string = arrayOfScores.join(" ");
+}
+
+let writeToFile = (string) => {
   fs.writeFile("output.txt", string, (err) => {
     if(err) {
       return console.log('Error: ' + err);
