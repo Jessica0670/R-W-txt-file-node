@@ -2,6 +2,11 @@ let fs = require('fs');
 
 let arrayOfElem = [];
 let scores = {};
+////////////////////////////////////
+// If two or more teams have the same number of points,
+// they should have the same rank and be printed in alphabetical order (as in the
+// tie for 3rd place in the sample data).
+////////////////////////////////////
 
 //read txt file
 let readLines = (input, func) => {
