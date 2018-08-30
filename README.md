@@ -1,10 +1,11 @@
-## Thank you for your interest in I 💛 Jane.
+# Thank you for your interest in I 💛 Jane.
 
 ## Instructions:
 
 ### To Run:
 
-`node server`
+Run `node server` in terminal in main directory.
+Results will print in output.txt file.
 
 This is a small problem that we would like you to solve so that we can get an
 idea of your coding ability. Your submission will be run in a clean environment

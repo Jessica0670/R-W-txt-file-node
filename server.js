@@ -32,16 +32,20 @@ let readLines = (input, func) => {
 
 //create groups of scores to compare
 let func = (data) => {
-  let arr = data.split(",")
-  arr = arr.map(x => x.trim().split(" "))
-  for(let i = 0; i < arr.length; i++){
-      if(arr[i].length > 2){
-        arr[i] = arr[i].slice(0, arr[i].length).join("").split(/([0-9]+)/)
-      }
-  }
-let obj = {};
-arr.forEach((data) => {obj[data[0]] = data[1]});
-arrayOfElem.push(obj)
+    let arr = data.split(",")
+    arr = arr.map(x => x.trim().split(" "))
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i].length > 2){
+            arr[i] = arr[i].slice(0, arr[i].length).join("").split(/([0-9]+)/)
+        }
+    }
+
+    for(var i = 0; i < arr.length; i++){
+      console.log(arr[i])
+    }
+    let obj = {};
+    arr.forEach((data) => {obj[data[0]] = data[1]});
+    arrayOfElem.push(obj)
 }
 
 //compare and add up scores for each
@@ -64,6 +68,42 @@ let tallyScore = (array) => {
             if(x[a] < x[b]){
                 scores[b] = scores[b] + 3
             }
+
+            //     !scores[a] ?
+            //         scores[a] = 0
+            //     : !scores[b] ?
+            //         scores[b] = 0
+            //     : x[a] === x[b] ?
+            //         scores[a]++ 
+            //         &&
+            //         scores[b]++
+            //     : x[a] > x[b] ?
+            //         scores[a] = scores[a] + 3
+            //     : 
+            //         scores[b] = scores[b] + 3
+
+            // // }
+            // // switch(scores, x) {
+            // //     case (!scores[a]):
+            // //         scores[a] = 0
+            // //         break;
+            // //     case (!scores[b]):
+            // //         scores[b] = 0
+            // //         break;
+            // //     case (x[a] === x[b]):
+            // //         scores[a]++
+            // //         scores[b]++
+            // //         break;
+            // //     case (x[a] > x[b]):
+            // //         scores[a] = scores[a] + 3
+            // //         break;
+            // //     case (x[a] < x[b]):
+            // //         scores[b] = scores[b] + 3
+            // //         break;
+            // //     default:
+            // //         scores
+            // //         break;
+            // // }
         });
 
     })
@@ -71,20 +111,19 @@ let tallyScore = (array) => {
 
 //write score to file as string
 let writeToFile = (scores) => {
-        let stringArray = [];
-        let count = 1;
-        for(var prop in scores) {
-            stringArray.push(count + '. ' + prop + ', ' + scores[prop] + '\n')
-            count++
-        }
-        let finalData = stringArray.join(" ")
-        fs.writeFile("output.txt", finalData, (err) => {
-            if(err) {
-                return console.log('Error: ' + err);
-            }
-        
-            console.log("Success");
-        }); 
+  let arrayOfStrings = [];
+  let count = 1;
+  for(var prop in scores) {
+    arrayOfStrings.push(count + '. ' + prop + ', ' + scores[prop] + '\n')
+    count++
+  }
+  let string = arrayOfStrings.join(" ")
+  fs.writeFile("output.txt", string, (err) => {
+    if(err) {
+      return console.log('Error: ' + err);
+    }
+    console.log("Success");
+  }); 
 }
 
 
